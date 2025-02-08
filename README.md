@@ -28,3 +28,11 @@ You will need an API key for the provider of the model.
 * [Anthropic](https://www.anthropic.com/api)
 * [OpenAI](https://openai.com/api/)
 * [X.ai](https://x.ai/api)
+
+Then set the API keys in your shell environment.
+
+```
+export OPENAI_API_KEY=<your key>
+export ANTHROPIC_API_KEY=<your key>
+export XAI_API_KEY=<your key>
+```
