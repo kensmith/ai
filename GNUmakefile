@@ -1,4 +1,6 @@
 model := claude-3-5-sonnet-latest
+model := gpt-4o
+model := grok-2-latest
 
 srcs := $(shell find . -type f -name "*.go")
 
