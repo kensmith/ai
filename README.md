@@ -36,3 +36,5 @@ export OPENAI_API_KEY=<your key>
 export ANTHROPIC_API_KEY=<your key>
 export XAI_API_KEY=<your key>
 ```
+
+You don't need all of these keys. You only need keys for the models you want to use.
