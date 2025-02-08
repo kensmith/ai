@@ -27,22 +27,17 @@ $ cat question | ai gpt-4o > answer
 ```
 
 See the GNUmakefile for this package for a build target that
-you can run instead of doing the above by hand. If you copy
-this rule into another makefile, you can just delete the
-`ai` dependency from the rule.
+you can run instead of doing the above by hand.
 
 Create a file called question in the same directory as the
 makefile, then:
 
 ```
-# make answer p=anthropic
+# make answers
 ```
 
-or just
-
-```
-$ make answer
-```
+It will query all of the models selected in `$(use-models)`
+in parallel.
 
 to use the default provider. The file `answer` will contain the response.
 

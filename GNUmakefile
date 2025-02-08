@@ -7,30 +7,35 @@
 # * openai
 # * xai
 
-anthropic-model := claude-3-5-sonnet-latest
-openai-model := gpt-4o
-xai-model := grok-2-latest
+MAKEFLAGS = -j
 
-default-model := $(openai-model)
+use-models := \
+  claude-3-5-sonnet-latest \
+  gpt-4o \
+  grok-2-latest
 
-model := $($(p)-model)
-
-$(if $(strip $(model)), \
-  $(comment model is set), \
-  $(eval model := $(default-model)) \
+model-targets :=
+$(foreach model,$(use-models), \
+  $(eval model-targets += $(model)-target) \
  )
 
 srcs := $(shell find . -type f -name "*.go")
+binary := ai
 
-ai: $(srcs) $(MAKEFILE_LIST)
+$(binary): $(srcs) $(MAKEFILE_LIST)
 	go fmt ./...
 	go mod tidy
 	go build -o $@ main.go
 
-.PHONY: answer
-answer: ai
-	cat question | ./ai $(model) > answer
-	echo >> question
-	echo "============================================================" >> question
-	echo >> question
-	cat answer >> question
+.PHONY: answers
+answers: $(model-targets)
+
+$(foreach model,$(use-models), \
+  $(eval .PHONY: $(model)-target) \
+  $(eval \
+    $(model)-target \
+    : $(binary) \
+    ; cat question | ./ai $(model) > answer-$(model) \
+  ) \
+ )
+
