@@ -6,8 +6,6 @@
 go install github.com/kensmith/ai@latest
 ```
 
-`ai` has no dependencies outside of the Go standard library.
-
 ## Usage
 
 ### List the supported models
