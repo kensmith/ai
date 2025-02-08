@@ -6,6 +6,8 @@
 go install github.com/kensmith/ai@latest
 ```
 
+`ai` has no dependencies outside of the Go standard library.
+
 ## Usage
 
 ### List the supported models
@@ -47,4 +49,6 @@ export XAI_API_KEY=<your key>
 You don't need all of these keys. You only need keys for the models you want to
 use.
 
-<!-- vim:tw=60: -->
+<!--
+vim:tw=60:
+-->
