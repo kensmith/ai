@@ -64,6 +64,14 @@ export XAI_API_KEY=<your key>
 You don't need all of these keys. You only need keys for the models you want to
 use.
 
+# Why did I build this?
+
+I had been using
+[Fabric](https://github.com/danielmiessler/fabric) which is
+pretty great but it does a lot more than I want and I found
+its UI to be a little heavy. I'm a minimalist so I made a
+minimalist tool.
+
 <!--
 vim:tw=60:
 -->
