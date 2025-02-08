@@ -127,5 +127,4 @@ func (p *Xai) Request(question string) (string, error) {
 	}
 
 	return fmt.Sprintf("%v", responseBody.Choices[0].Message.Content), nil
-	return "", nil
 }
