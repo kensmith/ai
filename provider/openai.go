@@ -10,11 +10,12 @@ import (
 )
 
 const (
-	url              = "https://api.openai.com/v1/chat/completions"
-	apiKeyEnvVarName = "OPENAI_API_KEY"
+	openaiURL              = "https://api.openai.com/v1/chat/completions"
+	openaiApiKeyEnvVarName = "OPENAI_API_KEY"
+	openaiTemperature      = 0.7
 )
 
-var models = []string{
+var openaiModels = []string{
 	"babbage-002",
 	"chatgpt-4o-latest",
 	"dall-e-2",
@@ -66,8 +67,8 @@ var models = []string{
 }
 
 func init() {
-	for _, name := range models {
-		Register("OpenAI", name, New)
+	for _, name := range openaiModels {
+		Register("OpenAI", name, NewOpenAI)
 	}
 }
 
@@ -76,42 +77,42 @@ type OpenAI struct {
 	selectedModel string
 }
 
-type Message struct {
+type OpenAIMessage struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
 }
 
-type Choice struct {
-	Index   int     `json:"index"`
-	Message Message `json:"message"`
+type OpenAIChoice struct {
+	Index   int           `json:"index"`
+	Message OpenAIMessage `json:"message"`
 }
 
 type ResponseBody struct {
-	Choices []Choice `json:"choices"`
+	Choices []OpenAIChoice `json:"choices"`
 }
 
-type RequestBody struct {
-	Model       string    `json:"model"`
-	Messages    []Message `json:"messages"`
-	Temperature float64   `json:"temperature"`
+type OpenAIRequestBody struct {
+	Model       string          `json:"model"`
+	Messages    []OpenAIMessage `json:"messages"`
+	Temperature float64         `json:"temperature"`
 }
 
-func New(model string) (Provider, error) {
-	o := OpenAI{}
-	o.apiKey = os.Getenv(apiKeyEnvVarName)
-	if o.apiKey == "" {
-		return nil, fmt.Errorf("environment variable %v not set", apiKeyEnvVarName)
+func NewOpenAI(model string) (Provider, error) {
+	p := OpenAI{}
+	p.apiKey = os.Getenv(openaiApiKeyEnvVarName)
+	if p.apiKey == "" {
+		return nil, fmt.Errorf("environment variable %v not set", openaiApiKeyEnvVarName)
 	}
-	o.selectedModel = model
+	p.selectedModel = model
 
-	return &o, nil
+	return &p, nil
 }
 
-func (o *OpenAI) Request(question string) (string, error) {
-	requestBody := RequestBody{
-		Model:       o.selectedModel,
-		Messages:    []Message{{Role: "user", Content: question}},
-		Temperature: 0.7,
+func (p *OpenAI) Request(question string) (string, error) {
+	requestBody := OpenAIRequestBody{
+		Model:       p.selectedModel,
+		Messages:    []OpenAIMessage{{Role: "user", Content: question}},
+		Temperature: openaiTemperature,
 	}
 
 	jsonData, err := json.Marshal(requestBody)
@@ -119,13 +120,13 @@ func (o *OpenAI) Request(question string) (string, error) {
 		return "", err
 	}
 
-	request, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", openaiURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return "", err
 	}
 
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer "+o.apiKey)
+	request.Header.Set("Authorization", "Bearer "+p.apiKey)
 
 	client := &http.Client{}
 	response, err := client.Do(request)
