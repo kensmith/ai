@@ -61,8 +61,6 @@ func main() {
 		fmt.Fprintln(os.Stdout, "no provider provides this model")
 		os.Exit(1)
 	}
-	fmt.Fprintf(os.Stdout, "%v\n", provider)
-
 
 	apiKey := os.Getenv("OPENAI_API_KEY")
 	if apiKey == "" {
