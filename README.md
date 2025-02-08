@@ -35,7 +35,7 @@ Create a file called question in the same directory as the
 makefile, then:
 
 ```
-# make answer p=antropic
+# make answer p=anthropic
 ```
 
 or just
