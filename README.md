@@ -1,4 +1,4 @@
-# A minimalist's LLM tool
+# A minimalist LLM tool
 
 ## Installation
 
