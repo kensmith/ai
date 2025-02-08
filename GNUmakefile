@@ -39,3 +39,6 @@ $(foreach model,$(use-models), \
   ) \
  )
 
+.PHONY: loc
+loc:
+	scc --no-cocomo
