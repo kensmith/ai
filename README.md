@@ -26,10 +26,25 @@ argument to select the model.
 $ cat question | ai gpt-4o > answer
 ```
 
-See the GNUmakefile for this package for a build target that you can run
-instead of doing the above by hand. The last value for `model` selects the
-model. If you copy this rule into another makefile, you can just delete the
+See the GNUmakefile for this package for a build target that
+you can run instead of doing the above by hand. If you copy
+this rule into another makefile, you can just delete the
 `ai` dependency from the rule.
+
+Create a file called question in the same directory as the
+makefile, then:
+
+```
+make answer p=antropic
+```
+
+or just
+
+```
+make answer
+```
+
+to use the default provider. The file `answer` will contain the response.
 
 ### API key
 
