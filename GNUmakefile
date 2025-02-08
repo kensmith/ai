@@ -1,4 +1,6 @@
-gpt: main.go
+srcs := $(shell find . -type f -name "*.go")
+
+gpt: $(srcs) $(MAKEFILE_LIST)
 	go fmt ./...
 	go mod tidy
 	go build -o $@ main.go
