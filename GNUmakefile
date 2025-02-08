@@ -1,12 +1,3 @@
-# usage:
-#
-# make answer p=<provider>
-#
-# where provider is one of:
-# * anthropic
-# * openai
-# * xai
-
 MAKEFLAGS = -j
 
 use-models := \
