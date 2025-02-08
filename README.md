@@ -27,7 +27,7 @@ $ cat question | ai gpt-4o > answer
 See the GNUmakefile for this package for a build target that
 you can run instead of doing the above by hand.
 
-Create a file called question in the same directory as the
+Create a file called `question` in the same directory as the
 makefile, then:
 
 ```
