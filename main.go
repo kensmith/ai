@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 	"strings"
 
 	"github.com/kensmith/ai/provider"
@@ -14,8 +15,9 @@ func handleFlags() (string, string) {
 	flag.Parse()
 	if flag.NArg() != 1 {
 		fmt.Fprintln(os.Stdout, "Usage: cat file | ai <model>\nwhere model is one of:")
-		for provider, models := range provider.Registry {
-			fmt.Fprintf(os.Stdout, "%s:\n", provider)
+		for _, providerName := range providers() {
+			models := provider.Registry[providerName]
+			fmt.Fprintf(os.Stdout, "%s:\n", providerName)
 			for _, model := range models {
 				fmt.Fprintf(os.Stdout, "\t%s\n", model)
 			}
@@ -43,6 +45,15 @@ func slurpStdin() string {
 	userMessage := strings.TrimSpace(string(input))
 
 	return userMessage
+}
+
+func providers() []string {
+	p := []string{}
+	for k := range provider.Registry {
+		p = append(p, k)
+	}
+	sort.Strings(p)
+	return p
 }
 
 func main() {
