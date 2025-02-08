@@ -87,7 +87,7 @@ type OpenAIChoice struct {
 	Message OpenAIMessage `json:"message"`
 }
 
-type ResponseBody struct {
+type OpenAIResponseBody struct {
 	Choices []OpenAIChoice `json:"choices"`
 }
 
@@ -140,7 +140,7 @@ func (p *OpenAI) Request(question string) (string, error) {
 		return "", err
 	}
 
-	var responseBody ResponseBody
+	var responseBody OpenAIResponseBody
 	err = json.Unmarshal(body, &responseBody)
 	if err != nil {
 		return "", err

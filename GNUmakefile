@@ -1,3 +1,5 @@
+model := claude-3-5-sonnet-latest
+
 srcs := $(shell find . -type f -name "*.go")
 
 gpt: $(srcs) $(MAKEFILE_LIST)
@@ -6,8 +8,8 @@ gpt: $(srcs) $(MAKEFILE_LIST)
 	go build -o $@ main.go
 
 .PHONY: answer
-answer:
-	cat question | ./gpt gpt-4o > answer
+answer: gpt
+	cat question | ./gpt $(model) > answer
 	echo >> question
 	echo "============================================================" >> question
 	echo >> question
