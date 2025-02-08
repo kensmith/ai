@@ -35,9 +35,7 @@ makefile, then:
 ```
 
 It will query all of the models selected in `$(use-models)`
-in parallel.
-
-to use the default provider. The files `answer-$(model)` will contain the responses.
+in parallel. The files `answer-$(model)` will contain the responses.
 
 ### API key
 
