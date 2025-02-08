@@ -7,13 +7,13 @@ import (
 	"os"
 	"strings"
 
-	"github.com/kensmith/gpt/provider"
+	"github.com/kensmith/ai/provider"
 )
 
 func handleFlags() (string, string) {
 	flag.Parse()
 	if flag.NArg() != 1 {
-		fmt.Fprintln(os.Stdout, "Usage: cat file | gpt <model>\nwhere model is one of:")
+		fmt.Fprintln(os.Stdout, "Usage: cat file | ai <model>\nwhere model is one of:")
 		for provider, models := range provider.Registry {
 			fmt.Fprintf(os.Stdout, "%s:\n", provider)
 			for _, model := range models {
