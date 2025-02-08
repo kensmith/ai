@@ -39,7 +39,7 @@ makefile, then:
 It will query all of the models selected in `$(use-models)`
 in parallel.
 
-to use the default provider. The file `answer` will contain the response.
+to use the default provider. The files `answer-$(model)` will contain the responses.
 
 ### API key
 
