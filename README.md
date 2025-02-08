@@ -35,13 +35,13 @@ Create a file called question in the same directory as the
 makefile, then:
 
 ```
-make answer p=antropic
+# make answer p=antropic
 ```
 
 or just
 
 ```
-make answer
+$ make answer
 ```
 
 to use the default provider. The file `answer` will contain the response.
