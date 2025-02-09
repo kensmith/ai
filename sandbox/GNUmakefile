@@ -28,6 +28,6 @@ $(foreach model,$(use-models), \
   $(eval \
     $(model)-target \
     : $(ai) \
-    ; cat question | ai $(model) > answer-$(model).md \
+    ; cat question.md | ai $(model) > answer-$(model).md \
   ) \
  )
