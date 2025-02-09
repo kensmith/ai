@@ -72,5 +72,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("# %s's response:\n\n%v", modelName, response)
+	fmt.Printf("# %s's response:\n\n%v\n", modelName, response)
 }
