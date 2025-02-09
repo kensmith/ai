@@ -24,15 +24,22 @@ argument to select the model.
 $ cat question | ai gpt-4o > answer
 ```
 
-See the GNUmakefile for this package for a build target that
+See sandbox/GNUmakefile in this package for a build target that
 you can run instead of doing the above by hand.
 
-Create a file called `question` in the same directory as the
-makefile, then:
+Create a file called `question` in the same directory as
+that makefile, then:
 
 ```
-# make answers
+$ make answers
 ```
+
+or just
+
+```
+$ make
+```
+
 
 It will query all of the models selected in `$(use-models)`
 in parallel. The files `answer-$(model)` will contain the responses.
