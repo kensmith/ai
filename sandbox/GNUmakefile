@@ -15,13 +15,8 @@ use-models := \
   gpt-4o \
   grok-2-latest
 
-model-targets :=
-$(foreach model,$(use-models), \
-  $(eval model-targets += $(model)-target) \
- )
-
 .PHONY: answers
-answers: $(model-targets)
+answers:
 
 $(foreach model,$(use-models), \
   $(eval .PHONY: $(model)-target) \
@@ -30,4 +25,7 @@ $(foreach model,$(use-models), \
     : $(ai) \
     ; cat question.md | ai $(model) > answer-$(model).md \
   ) \
+  $(eval \
+    answers: $(model)-target \
+   ) \
  )
