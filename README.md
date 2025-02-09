@@ -24,7 +24,7 @@ argument to select the model.
 $ cat question | ai gpt-4o > answer
 ```
 
-See sandbox/GNUmakefile in this package for a build target that
+See `sandbox/GNUmakefile` in this package for a build target that
 you can run instead of doing the above by hand.
 
 Create a file called `question` in the same directory as
