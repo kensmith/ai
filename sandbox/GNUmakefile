@@ -17,6 +17,7 @@ use-models := \
 
 .PHONY: answers
 answers:
+	cat question.md answer*
 
 $(foreach model,$(use-models), \
   $(eval .PHONY: $(model)-target) \
