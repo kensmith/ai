@@ -14,6 +14,9 @@ go install github.com/kensmith/ai@latest
 $ ai
 ```
 
+Nb -- Not all of the OpenAI models work. For example, none of the
+o1-* models work. Their flagship gpt-4o works.
+
 ### Ask a question
 
 In the tradition of a single purpose unix tool, `ai` just reads your question
