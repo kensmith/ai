@@ -17,8 +17,8 @@ $ ai
 ### Ask a question
 
 In the tradition of a single purpose unix tool, `ai` just reads your question
-from standard input and writes it to standard output. It accepts a single
-argument to select the model.
+from standard input and writes the response to standard
+output. It accepts a single argument to select the model.
 
 ```
 $ cat question | ai gpt-4o > answer
