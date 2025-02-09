@@ -62,7 +62,7 @@ func main() {
 
 	provider, err := provider.Factory[providerName](modelName)
 	if err != nil {
-		fmt.Printf("failed to create provider for %s\n", providerName)
+		fmt.Printf("failed to create provider for %s: %v\n", providerName, err)
 		os.Exit(1)
 	}
 
