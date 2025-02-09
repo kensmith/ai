@@ -42,7 +42,7 @@ $ make
 
 
 It will query all of the models selected in `$(use-models)`
-in parallel. The files `answer-$(model)` will contain the responses.
+in parallel. The files `answer-$(model).md` will contain the responses.
 
 ### API key
 
