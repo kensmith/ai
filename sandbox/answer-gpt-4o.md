@@ -1,4 +1,5 @@
-gpt-4o's response:
+# gpt-4o's response:
+
 Writing a fugue in the style of Johann Sebastian Bach is a complex task because it involves intricate counterpoint and thematic development. Below is a simplified version of a fugue that tries to capture the essence of Bach's style. I'll provide a piano score in text form, focusing on a three-voice fugue.
 
 **Key: C minor**
