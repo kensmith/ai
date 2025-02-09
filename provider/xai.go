@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 const (
@@ -34,10 +33,13 @@ type Xai struct {
 
 func NewXai(model string) (Provider, error) {
 	p := Xai{}
-	p.apiKey = os.Getenv(xaiApiKeyEnvVarName)
-	if p.apiKey == "" {
-		return nil, fmt.Errorf("environment variable %v not set", xaiApiKeyEnvVarName)
+
+	var err error
+	p.apiKey, err = getEnvVar(xaiApiKeyEnvVarName)
+	if err != nil {
+		return nil, err
 	}
+
 	p.selectedModel = model
 
 	return &p, nil

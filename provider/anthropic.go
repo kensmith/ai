@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 const (
@@ -37,10 +36,13 @@ type Anthropic struct {
 
 func NewAnthropic(model string) (Provider, error) {
 	p := Anthropic{}
-	p.apiKey = os.Getenv(anthropicApiKeyEnvVarName)
-	if p.apiKey == "" {
-		return nil, fmt.Errorf("environment variable %v not set", anthropicApiKeyEnvVarName)
+
+	var err error
+	p.apiKey, err = getEnvVar(anthropicApiKeyEnvVarName)
+	if err != nil {
+		return nil, err
 	}
+
 	p.selectedModel = model
 
 	return &p, nil

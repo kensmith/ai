@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 )
 
 const (
@@ -99,10 +98,13 @@ type OpenAIRequestBody struct {
 
 func NewOpenAI(model string) (Provider, error) {
 	p := OpenAI{}
-	p.apiKey = os.Getenv(openaiApiKeyEnvVarName)
-	if p.apiKey == "" {
-		return nil, fmt.Errorf("environment variable %v not set", openaiApiKeyEnvVarName)
+
+	var err error
+	p.apiKey, err = getEnvVar(openaiApiKeyEnvVarName)
+	if err != nil {
+		return nil, err
 	}
+
 	p.selectedModel = model
 
 	return &p, nil
