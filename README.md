@@ -27,19 +27,12 @@ $ cat question | ai gpt-4o > answer
 See `sandbox/GNUmakefile` in this package for a build target that
 you can run instead of doing the above by hand.
 
-Create a file called `question` in the same directory as
+Create a file called `question.md` in the same directory as
 that makefile, then:
-
-```
-$ make answers
-```
-
-or just
 
 ```
 $ make
 ```
-
 
 It will query all of the models selected in `$(use-models)`
 in parallel. The files `answer-$(model).md` will contain the responses.
