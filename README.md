@@ -14,6 +14,7 @@ go install github.com/kensmith/ai@latest
 $ ai
 ```
 
+
 Nb &mdash; Not all of the OpenAI models work. For example, none of the
 o1-* models work. Their flagship gpt-4o works. (current on
 2025-02-08)
