@@ -31,7 +31,7 @@ Create a file called `question.md` in the same directory as
 that makefile, then:
 
 ```
-$ make
+$ make ai
 ```
 
 It will query all of the models selected in `$(use-models)`
