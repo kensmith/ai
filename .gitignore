@@ -1,2 +1,4 @@
 ai
 *.swp
+.question*
+.answer*
