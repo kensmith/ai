@@ -7,7 +7,7 @@
 # include ai.mk
 # EOF
 # cat << EOF > question.md
-# How many "r" are there in the word straberrry?"
+# How many "r" are there in the word strawberry?"
 # EOF
 # make ai
 
