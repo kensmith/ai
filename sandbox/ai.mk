@@ -10,15 +10,28 @@
 # How many "r" are there in the word strawberry?"
 # EOF
 # make ai
+#
+# if you have a command whose output generates a common prompt preamble you
+# like to use set preamble-name to the name of that command which should appear
+# in your PATH. See llm-preamble in this directory for an example.
+
+SHELL = bash
 
 use-models := \
-  claude-3-5-sonnet-latest \
   gpt-4o \
-  grok-2-latest
+  grok-2-latest \
+  claude-3-5-sonnet-latest
 
 MAKEFLAGS = -j
 
 ai := $(strip $(shell which ai 2>/dev/null))
+
+preamble-name := llm-preamble
+preamble := $(strip $(shell which $(preamble-name) 2>/dev/null))
+$(if $(strip $(preamble)), \
+  $(comment found a preamble command), \
+  $(eval preamble := echo "") \
+ )
 
 .PHONY: ai
 $(if $(strip $(ai)), \
@@ -36,7 +49,7 @@ $(if $(strip $(ai)), \
     $(eval \
       $(model)-target \
       : $(ai) \
-      ; cat question.md | ai $(model) > answer-$(model).md \
+      ; cat <($(preamble)) question.md | ai $(model) > answer-$(model).md \
     ) \
     $(eval \
       ai: $(model)-target \
