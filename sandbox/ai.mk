@@ -18,19 +18,15 @@ use-models := \
 
 MAKEFLAGS = -j
 
-ai := $(wildcard $(CURDIR)/../ai)
-$(if $(strip $(ai)), \
-  $(comment binary is built), \
-  $(eval ai := $(shell which ai 2>/dev/null)) \
-  $(if $(strip $(ai)), \
-    $(comment binary found in environment), \
-    $(comment the ai target will complain about a missing ai binary) \
-   ) \
- )
+ai := $(strip $(shell which ai 2>/dev/null))
 
 .PHONY: ai
 $(if $(strip $(ai)), \
-  $(eval ai:;cat question.md answer*), \
+  $(eval ai: \
+  ; cat question.md answer* > .question.md \
+  ; mv question.md .question.md.orig \
+  ; mv .question.md question.md \
+  ), \
   $(eval ai:;@echo "please install the ai binary with 'go install github.com/kensmith/ai@latest'") \
  )
 
