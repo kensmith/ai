@@ -7,6 +7,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/kensmith/ai/provider"
 )
@@ -57,6 +58,7 @@ func providers() []string {
 }
 
 func main() {
+	startTime := time.Now()
 	modelName, providerName := handleFlags()
 	question := slurpStdin()
 
@@ -72,5 +74,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("\n\n# %s's response:\n\n%v\n\n", modelName, response)
+	elapsed := time.Since(startTime)
+	fmt.Printf("\n\n# response from %s (in %v):\n\n%v\n\n", modelName, elapsed.Round(time.Second), response)
 }

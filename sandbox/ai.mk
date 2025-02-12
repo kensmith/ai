@@ -49,7 +49,7 @@ $(if $(strip $(ai)), \
     $(eval \
       $(model)-target \
       : $(ai) \
-      ; cat <($(preamble)) question.md | ai $(model) > answer-$(model).md \
+      ; -cat <($(preamble)) question.md | ai $(model) > answer-$(model).md \
     ) \
     $(eval \
       ai: $(model)-target \
