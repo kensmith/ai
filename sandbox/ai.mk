@@ -17,10 +17,12 @@
 
 SHELL = bash
 
-use-models := \
-  gpt-4o \
-  grok-2-latest \
-  claude-3-5-sonnet-latest
+use-models += grok-2-latest
+use-models += gpt-4o
+use-models += claude-3-7-sonnet-latest
+
+answers := $(addsuffix .md,$(use-models))
+answers := $(addprefix answer-,$(answers))
 
 MAKEFLAGS = -j
 
@@ -33,10 +35,16 @@ $(if $(strip $(preamble)), \
   $(eval preamble := echo "") \
  )
 
+# to avoid adding the output from llm-preamble:
+# make raw=t
+$(if $(strip $(raw)), \
+  $(eval preamble := echo) \
+ )
+
 .PHONY: ai
 $(if $(strip $(ai)), \
   $(eval ai: \
-  ; cat question.md answer* > .question.md \
+  ; cat question.md $(answers) > .question.md \
   ; mv question.md .question.md.orig \
   ; mv .question.md question.md \
   ), \
