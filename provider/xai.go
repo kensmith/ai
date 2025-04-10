@@ -16,6 +16,10 @@ const (
 var xaiModels = []string{
 	"grok-2-latest",
 	"grok-2-vision-latest",
+	"grok-3-beta",
+	"grok-3-fast-beta",
+	"grok-3-mini-beta",
+	"grok-3-mini-fast-beta",
 	"grok-beta",
 	"grok-vision-beta",
 }
