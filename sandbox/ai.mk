@@ -17,9 +17,9 @@
 
 SHELL = bash
 
-use-models += grok-2-latest
-use-models += gpt-4o
-use-models += claude-3-7-sonnet-latest
+use-models += grok-3-beta
+# use-models += gpt-4o
+# use-models += claude-3-7-sonnet-latest
 
 answers := $(addsuffix .md,$(use-models))
 answers := $(addprefix answer-,$(answers))
