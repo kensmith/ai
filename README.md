@@ -55,6 +55,19 @@ export XAI_API_KEY=<your key>
 You don't need all of these keys. You only need keys for the models you want to
 use.
 
+### Ollama
+
+If you have an [Ollama](https://github.com/ollama/ollama)
+server running with the default settings, you can use this
+tool with its models also. Eg.
+
+```
+echo "why is the sky blue?" | ai gemma3
+```
+
+If your server isn't running on localhost, just set
+OLLAMA_URL to the URL of your server.
+
 # Why did I build this?
 
 I had been using
