@@ -66,7 +66,22 @@ echo "why is the sky blue?" | ai gemma3
 ```
 
 If your server isn't running on localhost, just set
-OLLAMA_URL to the URL of your server.
+OLLAMA_URL to the URL of your server. Ollama doesn't allow
+connections from other machines in your LAN by default so
+you may have to do something similar to:
+
+```
+sudo systemctl edit ollama.service
+```
+
+then add
+
+```
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+```
+
+to the override file.
 
 # Why did I build this?
 
