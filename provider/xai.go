@@ -9,25 +9,13 @@ import (
 )
 
 const (
-	xaiURL              = "https://api.x.ai/v1/chat/completions"
+	xaiAPIURL           = "https://api.x.ai/v1/chat/completions"
+	xaiModelsURL        = "https://docs.x.ai/docs/models"
 	xaiApiKeyEnvVarName = "XAI_API_KEY"
 )
 
-var xaiModels = []string{
-	"grok-2-latest",
-	"grok-2-vision-latest",
-	"grok-3-beta",
-	"grok-3-fast-beta",
-	"grok-3-mini-beta",
-	"grok-3-mini-fast-beta",
-	"grok-beta",
-	"grok-vision-beta",
-}
-
 func init() {
-	for _, name := range xaiModels {
-		Register("X.ai", name, NewXai)
-	}
+	Register("x.ai", NewXai, xaiModelsURL)
 }
 
 type Xai struct {
@@ -102,7 +90,7 @@ func (p *Xai) Request(question string) (string, error) {
 		return "", err
 	}
 
-	request, err := http.NewRequest("POST", xaiURL, bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", xaiAPIURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return "", err
 	}

@@ -6,62 +6,23 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
 	"time"
 )
 
 const (
 	ollamaURLEnvVarName = "OLLAMA_URL"
-	defaultOllamaURL    = "http://localhost:11434/api/generate" // todo convert this to an envvar
+	defaultOllamaURL    = "http://localhost:11434/api/generate"
+	ollamaModelsURL     = "https://ollama.com/library"
 )
 
 var ollamaURL string = defaultOllamaURL
-
-var ollamaModels = []string{
-	"codellama",
-	"deepseek-r1:1.5b",
-	"deepseek-r1~1.5b", // alternate spelling of models containing colons because makefiles can't deal with colons
-	"deepseek-r1:671b",
-	"deepseek-r1~671b",
-	"gemma3:12b",
-	"gemma3~12b",
-	"gemma3:1b",
-	"gemma3~1b",
-	"gemma3:27b",
-	"gemma3~27b",
-	"gemma3",
-	"gemma3:4b",
-	"gemma3~4b",
-	"granite3.2",
-	"llama2-uncensored",
-	"llama3.1",
-	"llama3.1:405b",
-	"llama3.1~405b",
-	"llama3.2",
-	"llama3.2:1b",
-	"llama3.2~1b",
-	"llama3.2-vision",
-	"llama3.2-vision:90b",
-	"llama3.2-vision~90b",
-	"llama3.3",
-	"llava",
-	"mistral",
-	"moondream",
-	"neural-chat",
-	"phi4",
-	"phi4-mini",
-	"qwq",
-	"starling-lm",
-}
 
 func init() {
 	newOllamaURL, err := getEnvVar(ollamaURLEnvVarName)
 	if err == nil && len(newOllamaURL) > 0 {
 		ollamaURL = newOllamaURL
 	}
-	for _, name := range ollamaModels {
-		Register("Ollama", name, NewOllama)
-	}
+	Register("ollama", NewOllama, ollamaModelsURL)
 }
 
 type Ollama struct {
@@ -96,9 +57,8 @@ type OllamaResponseBody struct {
 }
 
 func (p *Ollama) Request(question string) (string, error) {
-	model := strings.ReplaceAll(p.selectedModel, "~", ":")
 	requestBody := OllamaRequestBody{
-		Model:  model,
+		Model:  p.selectedModel,
 		Prompt: question,
 		Stream: false,
 	}

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
 	"strings"
 	"time"
 
@@ -13,27 +12,15 @@ import (
 )
 
 func handleFlags() (string, string) {
+	prov := flag.String("p", "", fmt.Sprintf("<provider> in %v", provider.Providers))
+	mod := flag.String("m", "", fmt.Sprintf("<model> from %s", provider.ModelURLs))
 	flag.Parse()
-	if flag.NArg() != 1 {
-		fmt.Fprintln(os.Stdout, "Usage: cat file | ai <model>\nwhere model is one of:")
-		for _, providerName := range providers() {
-			models := provider.Registry[providerName]
-			fmt.Fprintf(os.Stdout, "%s:\n", providerName)
-			for _, model := range models {
-				fmt.Fprintf(os.Stdout, "\t%s\n", model)
-			}
-		}
+	if *prov == "" || *mod == "" {
+		fmt.Printf("\nexample:\n\necho 'why is the sky blue?' | ./ai -m anthropic -p claude-3-7-sonnet-latest\n\n")
+		flag.Usage()
 		os.Exit(1)
 	}
-
-	model := flag.Arg(0)
-	provider, ok := provider.ReverseRegistry[model]
-	if !ok {
-		fmt.Fprintln(os.Stdout, "no provider provides this model")
-		os.Exit(1)
-	}
-
-	return model, provider
+	return *mod, *prov
 }
 
 func slurpStdin() string {
@@ -46,15 +33,6 @@ func slurpStdin() string {
 	userMessage := strings.TrimSpace(string(input))
 
 	return userMessage
-}
-
-func providers() []string {
-	p := []string{}
-	for k := range provider.Registry {
-		p = append(p, k)
-	}
-	sort.Strings(p)
-	return p
 }
 
 func main() {

@@ -9,25 +9,15 @@ import (
 )
 
 const (
-	anthropicURL              = "https://api.anthropic.com/v1/messages"
+	anthropicAPIURL           = "https://api.anthropic.com/v1/messages"
+	anthropicModelsURL        = "https://docs.anthropic.com/en/docs/about-claude/models/all-models"
 	anthropicApiKeyEnvVarName = "ANTHROPIC_API_KEY"
 	anthropicVersion          = "2023-06-01"
 	anthropicMaxTokens        = 8192
 )
 
-var anthropicModels = []string{
-	"claude-3-7-sonnet-latest",
-	"claude-3-5-sonnet-latest",
-	"claude-3-5-haiku-latest",
-	"claude-3-5-sonnet-latest",
-	"claude-3-haiku-latest",
-	"claude-3-opus-latest",
-}
-
 func init() {
-	for _, name := range anthropicModels {
-		Register("Anthropic", name, NewAnthropic)
-	}
+	Register("anthropic", NewAnthropic, anthropicModelsURL)
 }
 
 type Anthropic struct {
@@ -86,7 +76,7 @@ func (p *Anthropic) Request(question string) (string, error) {
 		return "", err
 	}
 
-	request, err := http.NewRequest("POST", anthropicURL, bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", anthropicAPIURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return "", err
 	}
