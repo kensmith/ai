@@ -8,20 +8,21 @@ go install github.com/kensmith/ai@latest
 
 ## Usage
 
-### List the supported models
+### List the supported providers
 
 ```
-$ ai
+$ ai -h
 ```
 
 ### Ask a question
 
-In the tradition of a single purpose unix tool, `ai` just reads your question
-from standard input and writes the response to standard
-output. It accepts a single argument to select the model.
+In the tradition of a single purpose unix tool, `ai` just
+reads your question from standard input and writes the
+response to standard output. It accepts a single argument to
+select the model.
 
 ```
-$ cat question | ai gpt-4o > answer
+$ cat question | ai -p openai -m gpt-4o > answer
 ```
 
 See `sandbox/ai.mk` in this package for a build target that
@@ -35,7 +36,8 @@ $ make ai
 ```
 
 It will query all of the models selected in `$(use-models)`
-in parallel. The files `answer-$(model).md` will contain the responses.
+in parallel. The files `answer-$(model).md` will contain the
+responses.
 
 ### API key
 
@@ -52,8 +54,8 @@ export ANTHROPIC_API_KEY=<your key>
 export XAI_API_KEY=<your key>
 ```
 
-You don't need all of these keys. You only need keys for the models you want to
-use.
+You don't need all of these keys. You only need keys for the
+models you want to use.
 
 ### Ollama
 
@@ -62,7 +64,7 @@ server running with the default settings, you can use this
 tool with its models also. Eg.
 
 ```
-echo "why is the sky blue?" | ai gemma3
+echo "why is the sky blue?" | ai -p ollama -m gemma3:12b
 ```
 
 If your server isn't running on localhost, just set
