@@ -16,7 +16,7 @@ func handleFlags() (string, string) {
 	mod := flag.String("m", "", fmt.Sprintf("<model> from %s", provider.ModelURLs))
 	flag.Parse()
 	if *prov == "" || *mod == "" {
-		fmt.Printf("\nexample:\n\necho 'why is the sky blue?' | ./ai -m anthropic -p claude-3-7-sonnet-latest\n\n")
+		fmt.Printf("\nexample:\n\necho 'why is the sky blue?' | ai -p anthropic -m claude-3-7-sonnet-latest\n\n")
 		flag.Usage()
 		os.Exit(1)
 	}
@@ -40,7 +40,13 @@ func main() {
 	modelName, providerName := handleFlags()
 	question := slurpStdin()
 
-	provider, err := provider.Factory[providerName](modelName)
+	providerFunc, ok := provider.Factory[providerName]
+	if !ok {
+		fmt.Printf("unknown provider %s\n", providerName)
+		os.Exit(1)
+	}
+
+	provider, err := providerFunc(modelName)
 	if err != nil {
 		fmt.Printf("failed to create provider for %s: %v\n", providerName, err)
 		os.Exit(1)
