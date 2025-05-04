@@ -28,6 +28,10 @@ $ cat question | ai -p openai -m gpt-4o > answer
 See `sandbox/ai.mk` in this package for a build target that
 you can run instead of doing the above by hand.
 
+Select the models you want to use by adding to the $(models)
+make variable using the form <provider>|<model>. The stock
+ai.mk contains a few examples.
+
 Create a file called `question.md` in the same directory as
 that makefile, then:
 
@@ -36,8 +40,10 @@ $ make ai
 ```
 
 It will query all of the models selected in `$(use-models)`
-in parallel. The files `answer-$(model).md` will contain the
-responses.
+in parallel. The files `answer-$(provider)-$(model).md` will
+contain the responses. Because of limitations of GNU make,
+forward slashes and colons in the original model name will
+be substituted with make-friendly alternatives.
 
 ### API key
 
